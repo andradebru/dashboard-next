@@ -2,12 +2,13 @@ import { Card } from '@/app/ui/dashboard/cards';
 import RevenueChart from '@/app/ui/dashboard/revenue-chart';
 import LatestInvoices from '@/app/ui/dashboard/latest-invoices';
 import { lusitana } from '@/app/ui/fonts';
-import latestInvoices from '@/app/ui/dashboard/latest-invoices';
-import { LatestInvoiceRaw } from '../../lib/definitions';
 import { fetchLatestInvoices, fetchCardData } from '@/app/lib/data';
 import { sql } from '@vercel/postgres';
 import { Suspense } from 'react';
-import { RevenueChartSkeleton } from '@/app/ui/skeletons';
+import {
+  LatestInvoicesSkeleton,
+  RevenueChartSkeleton,
+} from '@/app/ui/skeletons';
 export default async function Page() {
   const latestInvoices = await fetchLatestInvoices();
 
@@ -37,7 +38,9 @@ export default async function Page() {
         <Suspense fallback={<RevenueChartSkeleton />}>
           <RevenueChart />
         </Suspense>{' '}
-        <LatestInvoices latestInvoices={latestInvoices} />
+        <Suspense fallback={<LatestInvoicesSkeleton />}>
+          <LatestInvoices />
+        </Suspense>
       </div>
     </main>
   );
