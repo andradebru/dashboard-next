@@ -6,6 +6,12 @@ import { lusitana } from '@/app/ui/fonts';
 import { InvoicesTableSkeleton } from '@/app/ui/skeletons';
 import { Suspense } from 'react';
 import { fetchInvoicesPages } from '@/app/lib/data';
+import { Metadata } from 'next';
+ 
+// Metadata in nested pages will override the metadata in the parent.
+export const metadata: Metadata = {
+  title: 'Invoices',
+};
 
 export default async function Page({
   searchParams,
